@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글로벌 도슨트 시크릿 미션</title>
+    <style>
+        /* 동글동글하고 귀여운 '주아체' 폰트 적용 */
+        @import url('https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #f0f9ff;
+            --on-color: #38bdf8;
+            --warm-color: #fb923c;
+            --text-color: #334155;
+            --success-color: #4ade80;
+            --danger-color: #ef4444;
+            --secret-color: #8b5cf6; 
+            --mission2-color: #3b82f6; /* 3D 미션용 파란색 */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Jua', 'Noto Sans KR', sans-serif; 
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            overflow-x: hidden;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 3px solid var(--on-color);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: #fff;
+            text-shadow: 0 0 10px #38bdf8, 0 0 20px #38bdf8;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--warm-color);
+            font-size: 1.5rem;
+            text-shadow: 0 0 5px rgba(251, 146, 60, 0.5);
+        }
+
+        .step-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .step-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .section-card {
+            background: #fff;
+            border: 3px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--text-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 6px solid var(--on-color);
+            padding-left: 12px;
+            font-size: 1.8rem;
+        }
+
+        .highlight {
+            color: var(--warm-color);
+            font-size: 1.15rem;
+        }
+        
+        .secret-highlight {
+            color: var(--secret-color);
+            font-size: 1.2rem;
+            text-shadow: 0 0 5px rgba(139, 92, 246, 0.3);
+        }
+
+        .story-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-align: justify;
+            color: #475569;
+        }
+
+        .radar-box {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 15px;
+            color: #16a34a;
+            margin: 15px 0;
+            text-align: center;
+            border: 3px dashed #4ade80;
+            font-size: 1.1rem;
+        }
+
+        .info-box {
+            background: #e0f2fe;
+            padding: 15px;
+            border-radius: 15px;
+            border-left: 6px solid var(--on-color);
+            margin: 15px 0;
+            font-size: 1.1rem;
+        }
+        
+        .info-box.mission-tips {
+            border-left-color: var(--warm-color);
+            background: #ffedd5;
+        }
+
+        .info-box.mission2-tips {
+            border-left-color: var(--mission2-color);
+            background: #eff6ff;
+        }
+
+        .hint-box {
+            background: #f3e8ff;
+            border: 3px dashed var(--secret-color);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+            color: #5b21b6;
+            animation: popIn 0.5s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        button {
+            background: var(--on-color);
+            color: white;
+            border: none;
+            padding: 18px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background: var(--warm-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-next {
+            background: var(--success-color);
+        }
+
+        .btn-next:hover {
+            background: #22c55e;
+        }
+
+        .group-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .group-btn {
+            background: #f8fafc;
+            color: var(--text-color);
+            padding: 20px;
+            font-size: 1.4rem;
+            border: 3px solid #cbd5e1;
+            border-radius: 15px;
+        }
+
+        .group-btn:hover {
+            border-color: var(--on-color);
+            background: #e0f2fe;
+        }
+        
+        .group-btn.selected {
+            border-color: var(--warm-color);
+            background: var(--warm-color);
+            color: #fff;
+        }
+
+        #mission-result {
+            display: none;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .coordinate-display {
+            font-size: 2.2rem;
+            color: var(--warm-color);
+            letter-spacing: 3px;
+            margin: 15px 0;
+            padding: 20px;
+            background: #fff;
+            border: 4px dashed var(--warm-color);
+            border-radius: 20px;
+        }
+
+        textarea, input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background: #fff;
+            border: 3px solid #e2e8f0;
+            color: var(--text-color);
+            border-radius: 15px;
+            font-size: 1.2rem;
+            resize: vertical;
+        }
+        
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--on-color);
+            background: #f0f9ff;
+        }
+
+        .validation-message {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            min-height: 30px;
+        }
+
+        .char-guide {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: left;
+        }
+        
+        .char-guide img {
+            width: 70px;
+            height: 70px;
+        }
+
+        .reveal-box {
+            background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
+            border: 4px solid #eab308;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            animation: popIn 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>글로벌 도슨트 시크릿 미션</h1>
+        <div class="subtitle">잃어버린 '온(溫)'의 비밀을 찾아라!</div>
+    </header>
+
+    <div id="step-1" class="step-section active">
+        <div class="section-card">
+            <h2>🚨 [긴급 상황] 미션 하달</h2>
+            <div class="radar-box">
+                [베이스캠프] 충청남도 논산시 해월로148<br>
+                [경고] 세계 지도에서 가장 중요한 '어떤 가치'가 봉인되었습니다!
+            </div>
+            <p class="story-text">
+                글로벌 도슨트 요원들이여, 정체불명의 사이버 해킹으로 인해 지구촌 곳곳의 <span class="secret-highlight">'아주 특별한 역사'</span>가 담긴 좌표들이 모두 봉인되었습니다. 이대로 두면 인류가 쌓아온 따뜻함(溫)의 기억이 사라지고 세계와의 연결(On)이 영원히 끊어지게 됩니다.
+            </p>
+            <p class="story-text">
+                여러분에게 주어진 좌표에는 이 잃어버린 가치를 되찾을 결정적인 단서가 숨어있습니다. 지금 즉시 구글 어스 위성을 가동하여 그곳이 어디인지 스캔하고, 숨겨진 암호를 푸는 것이 여러분의 임무입니다!
+            </p>
+            <button class="btn-next" onclick="nextStep(2)">임무 수락 및 좌표 요청 ➔</button>
+        </div>
+    </div>
+
+    <div id="step-2" class="step-section">
+        <div class="section-card">
+            <h2>🎲 [작전 1] 타겟 좌표 할당 및 스캔</h2>
+            <p style="font-size: 1.2rem; color: #475569;">소속된 모둠의 버튼을 클릭하여 시크릿 좌표와 탐사 미션을 발급받으시오.</p>
+            <br>
+            <div class="group-grid">
+                <button id="g-btn-1" class="group-btn" onclick="assignRandomCoordinate(1)">1모둠</button>
+                <button id="g-btn-2" class="group-btn" onclick="assignRandomCoordinate(2)">2모둠</button>
+                <button id="g-btn-3" class="group-btn" onclick="assignRandomCoordinate(3)">3모둠</button>
+                <button id="g-btn-4" class="group-btn" onclick="assignRandomCoordinate(4)">4모둠</button>
+            </div>
+
+            <div id="mission-result">
+                <h3 id="group-title" style="color: var(--on-color); font-size: 1.5rem;"></h3>
+                <p>당신의 모둠에 할당된 탐사 좌표입니다:</p>
+                <div class="coordinate-display" id="coordinate-text"></div>
+                
+                <div class="info-box">
+                    <strong>💡 [중요] 구글 어스 검색창 좌표 입력 방법</strong><br>
+                    구글 어스 검색창에 위도와 경도를 입력할 때는 
+                    <span class="highlight">52 30 16 N, 13 26 35 E</span> 처럼 
+                    숫자와 알파벳 사이를 <strong>띄어쓰기만 해도</strong> 정확하게 검색됩니다. (° ' " 기호는 생략하세요!)
+                </div>
+                
+                <div class="char-guide">
+                    <img src="https://img.icons8.com/color/144/000000/robot-vacuum.png" alt="가이드 로봇">
+                    <div>
+                        <p>안녕, 요원! 난 작전 가이드 로봇 '온이'야.<br>위성을 켜고 이 좌표로 날아가봐!</p>
+                        <p style="color: var(--secret-color); margin-top: 5px;"><strong>💡 [온이의 첫 번째 힌트]</strong> 우리가 가는 곳은 평범한 관광지가 아니야. 세계 사람들에게 아주 중요한 장소란다!</p>
+                    </div>
+                </div>
+                
+                <a id="earth-link" href="#" target="_blank" style="text-decoration: none;">
+                    <button style="background: var(--warm-color);">🌍 구글 어스 위성 레이더 가동 및 이동하기</button>
+                </a>
+                
+                <div class="info-box mission-tips">
+                    <strong>📸 [미션 1] 스트리트 뷰 현장 침투 인증</strong>
+                    <p style="margin-top: 5px; color: #475569;"><strong>스트리트 뷰(사람 모양 아이콘) 활용:</strong> 좌표를 쳐서 도착한 후, 화면 우측 하단의 노란색 사람 아이콘을 지도 위 파란색 선으로 끌어다 놓아요! 그 생생한 현장 화면을 캡쳐해서 올려주세요.</p>
+                    <input type="file" id="street-screenshot" accept="image/*">
+                </div>
+
+                <div class="info-box mission2-tips">
+                    <strong style="color: var(--mission2-color);">📸 [미션 2] 3D 입체 스캔 인증</strong>
+                    <p style="margin-top: 5px; color: #475569;"><strong>3D 버튼 활용:</strong> 이번엔 화면 우측 하단의 '3D' 버튼을 눌러 그 장소를 입체적으로 돌려보세요! 멋진 3D 화면을 캡쳐해서 올려주세요.</p>
+                    <input type="file" id="3d-screenshot" accept="image/*">
+                </div>
+                
+                <button class="btn-next" onclick="nextStep(3)">스캔 사진 2장 인증 완료! 다음 임무로 ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="step-3" class="step-section">
+        <div class="section-card">
+            <h2>📝 [작전 2] 현장 정보 해독</h2>
+            <p style="font-size: 1.2rem; color: #475569;">위성 탐사 결과를 바탕으로 정보 분석 보고서를 작성하십시오.</p>
+            
+            <div style="margin-top: 25px; border-bottom: 2px dashed #cbd5e1; padding-bottom: 25px;">
+                <h3 style="color: var(--on-color); font-size: 1.5rem;">🎯 미션 3: 국가와 대륙 알아내기</h3>
+                <p style="color: #64748b;">화면을 축소하며 도착한 장소가 어느 대륙, 어느 나라인지 찾아내세요.</p>
+                
+                <input type="text" id="continent-input" placeholder="대륙 입력 (예: 유럽, 아시아 등)">
+                <input type="text" id="country-input" placeholder="나라 이름 입력 (예: 독일, 대한민국 등)">
+                
+                <button style="background: #94a3b8;" onclick="verifyLocation()">대륙/국가 위성 데이터 검증하기 ➔</button>
+                <div id="validation-error" class="validation-message"></div>
+            </div>
+
+            <div id="activity-2-section" style="margin-top: 25px; display: none;">
+                
+                <div class="hint-box">
+                    <img src="https://img.icons8.com/color/48/000000/idea.png" alt="전구">
+                    <span><strong>[온이의 두 번째 힌트]</strong> 대륙과 나라를 맞혔구나! 이곳은 과거에 큰 아픔이 있었거나, 세계 사람들이 무언가를 지키기 위해 약속을 한 곳이야. 과연 무엇을 지키려 했을까? 조금만 더 조사해보자!</span>
+                </div>
+
+                <h3 style="color: #22c55e; font-size: 1.5rem;">🎯 미션 4: 좌표의 비밀과 현장 관찰하기</h3>
+                
+                <p style="color: #64748b; margin-top: 15px; font-weight: bold;">
+                    ① 좌표 속 알파벳(N, S, E, W)의 비밀 풀기
+                </p>
+                <p style="color: #64748b; font-size: 1rem;">
+                    여러분이 받은 좌표의 영어를 보고, 이 장소가 적도를 기준으로 <strong>'북반구'</strong>인지 <strong>'남반구'</strong>인지 적어보세요. (N은 북쪽, S는 남쪽을 뜻해요!)
+                </p>
+                <input type="text" id="hemisphere-input" placeholder="예: N이 있으므로 북반구입니다.">
+
+                <p style="color: #64748b; margin-top: 15px; font-weight: bold;">
+                    ② 현장 관찰 보고서 작성하기!
+                </p>
+                <p style="color: #64748b; font-size: 1rem;">
+                    스트리트 뷰와 3D 화면으로 보았을 때, <strong>가장 눈에 띄는 건물이나 풍경</strong>은 어떤 모습인가요? 눈에 보이는 대로 묘사해주세요.
+                </p>
+                <textarea id="observation-text" rows="4" placeholder="예: 길다란 회색 장벽이 있고, 그 위에 화려한 그림들이 그려져 있습니다."></textarea>
+                
+                <button id="btn-to-step4" class="btn-next" onclick="nextStep(4)">최종 분석 보고서 시스템에 전송 ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="step-4" class="step-section">
+        <div class="reveal-box">
+            <h2 style="color: #b45309; justify-content: center; font-size: 2.2rem; border: none; margin-bottom: 10px;">🎉 암호 해독 완료! 🎉</h2>
+            <p style="font-size: 1.4rem; color: #713f12;">여러분이 찾은 독일의 장벽, 남아공의 섬, 미국의 본부, 한국의 판문점...</p>
+            <p style="font-size: 1.6rem; color: #9a3412; font-weight: bold; margin-top: 15px;">이 장소들이 숨기고 있던 봉인된 가치는 바로...</p>
+            <div style="font-size: 3rem; color: #ea580c; font-weight: 900; margin: 20px 0; text-shadow: 2px 2px 0px #fff;">🌟 인권과 평화 🌟</div>
+            <p style="font-size: 1.3rem; color: #713f12;">맞습니다! 이곳들은 전 세계 사람들이 아픔을 딛고 따뜻함(溫)을 지켜낸 <strong>인권과 평화의 랜드마크</strong>였습니다.</p>
+        </div>
+
+        <div class="section-card" style="text-align: center; border-color: var(--on-color); border-width: 4px;">
+            <h2>🌍 [최종 임무] 디지털 맵 온(On) 연결하기</h2>
+            
+            <div class="info-box" style="border-left-color: var(--on-color); text-align: left; background: #f0f9ff;">
+                <strong>📢 패들렛 작성 안내</strong><br>
+                <span class="highlight">"패들렛으로 이동하여 우리 모둠이 찾은 장소의 이름과 관찰한 풍경, 그리고 왜 이곳이 '인권'과 '평화'를 상징하는지 여러분의 생각을 자유롭게 적어주세요!"</span>
+            </div>
+            
+            <a href="https://padlet.com/yslee2321/padlet-j3kmbmez3siay3qi" target="_blank" style="text-decoration: none;">
+                <button style="background: var(--on-color); font-size: 1.4rem; padding: 25px; border-radius: 20px;">🌐 글로벌 도슨트 맵(패들렛)에 최종 업로드 하기</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const coordinatesDB = [
+        { coord: "52 30 16 N, 13 26 35 E", continents: ["유럽"], countries: ["독일"] },
+        { coord: "33 48 24 S, 18 21 58 E", continents: ["아프리카"], countries: ["남아프리카공화국", "남아공"] },
+        { coord: "40 44 58 N, 73 58 05 W", continents: ["북아메리카", "북미"], countries: ["미국"] },
+        { coord: "37 57 21 N, 126 40 36 E", continents: ["아시아"], countries: ["대한민국", "한국", "남한"] }
+    ];
+
+    let currentCoordinateIndex = null;
+
+    function nextStep(stepNumber) {
+        if (stepNumber === 3) {
+            const streetFile = document.getElementById('street-screenshot');
+            const threedFile = document.getElementById('3d-screenshot');
+            if (streetFile.files.length === 0 || threedFile.files.length === 0) {
+                alert("❌ 미션 1(스트리트 뷰)과 미션 2(3D 스캔) 캡쳐 사진을 모두 올려주셔야 다음으로 넘어갈 수 있어요!");
+                return;
+            }
+        }
+        
+        if (stepNumber === 4) {
+            const hemiInput = document.getElementById('hemisphere-input').value.trim();
+            const obsInput = document.getElementById('observation-text').value.trim();
+            
+            if(hemiInput === "" || obsInput === "") {
+                alert("❌ 미션 4: 북반구/남반구 정답과 눈에 띄는 풍경을 모두 작성해주세요!");
+                return;
+            }
+        }
+
+        const steps = document.querySelectorAll('.step-section');
+        steps.forEach(step => step.classList.remove('active'));
+        
+        document.getElementById(`step-${stepNumber}`).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function assignRandomCoordinate(groupNumber) {
+        for(let i=1; i<=4; i++) {
+            document.getElementById(`g-btn-${i}`).classList.remove('selected');
+        }
+        document.getElementById(`g-btn-${groupNumber}`).classList.add('selected');
+
+        const randomIndex = Math.floor(Math.random() * coordinatesDB.length);
+        currentCoordinateIndex = randomIndex;
+        const selectedData = coordinatesDB[randomIndex];
+        
+        const searchQuery = encodeURIComponent(selectedData.coord);
+        const earthUrl = `https://earth.google.com/web/search/${searchQuery}`;
+
+        document.getElementById('group-title').innerText = `[ 제 ${groupNumber}모둠 탐사 요원 배정 완료 ]`;
+        document.getElementById('coordinate-text').innerText = selectedData.coord;
+        document.getElementById('earth-link').href = earthUrl;
+        
+        document.getElementById('mission-result').style.display = 'block';
+    }
+
+    function verifyLocation() {
+        const continentInput = document.getElementById('continent-input').value.trim().replace(/\s+/g, '');
+        const countryInput = document.getElementById('country-input').value.trim().replace(/\s+/g, '');
+        const errorMsg = document.getElementById('validation-error');
+        const activity2Section = document.getElementById('activity-2-section');
+        
+        if (currentCoordinateIndex === null) {
+            errorMsg.style.color = '#ef4444';
+            errorMsg.innerText = "❌ 모둠을 먼저 선택하고 좌표를 발급받으세요.";
+            return;
+        }
+        
+        const correctAnswer = coordinatesDB[currentCoordinateIndex];
+        
+        const isContinentCorrect = correctAnswer.continents.some(c => continentInput.includes(c) || c.includes(continentInput) && continentInput !== "");
+        const isCountryCorrect = correctAnswer.countries.some(c => countryInput.includes(c) || c.includes(countryInput) && countryInput !== "");
+        
+        if (isContinentCorrect && isCountryCorrect) {
+            errorMsg.style.color = '#22c55e';
+            errorMsg.innerHTML = "✅ 위성 데이터 암호 해독 성공! 대륙과 국가가 일치합니다.<br>🔓 숨겨진 [미션 4] 임무가 잠금 해제되었습니다!";
+            activity2Section.style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('activity-2-section').scrollIntoView({ behavior: 'smooth' });
+            }, 200);
+        } else {
+            errorMsg.style.color = '#ef4444';
+            errorMsg.innerText = "❌ 암호 해독 실패! 구글 어스 위성 화면에서 대륙과 나라를 다시 잘 찾아보세요. (힌트: 띄어쓰기 없이 적어도 괜찮아요!)";
+            activity2Section.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
